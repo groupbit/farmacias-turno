@@ -27,7 +27,7 @@ class EntityList extends React.Component {
           <table className="table">
             <thead>
               <tr>
-                {this.renderHeaders(columns)}
+              <th>nombre</th>
               </tr>
             </thead>
             <tbody>
