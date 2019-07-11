@@ -1,25 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter as Router, Route, Switch, Redirect, NavLink} from "react-router-dom"
-import Entitylis from "./componentes/EntityList"
+import logo2 from './logo2.jpg';
+import {BrowserRouter as Router, Route, Switch, Redirect, NavLink as Link} from "react-router-dom"
+import EntityList from "./componentes/EntityList"
 import CargarFarmacia from "./componentes/CargarFarmacia"
+import { Nav, NavItem, NavLink } from 'reactstrap';
 
 function FarmaciasComponent(){
-  return (<Entitylis entity="farmacias"/>)
+  return (<EntityList entity="farmacias"/>)
 }
 
 function App() {
   return (
     <div className="App">
-    <Router>
-      <header className="App-header">
-        <ul>
-          <li><NavLink to="/">Home</NavLink></li>
-          <li><NavLink to="/farmacias">Farmacias</NavLink></li>
-          <li><NavLink to="/Cargar">Agregar</NavLink></li>
-        </ul>
-      </header>
+    <Router> 
+    <Nav>
+          <NavItem>
+            <NavLink tag={Link} to="/" activeClassName="active">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/farmacias" activeClassName="active">Farmacias</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/Cargar" activeClassName="active">Agregar</NavLink>
+          </NavItem>
+        </Nav> 
+       <img src={logo2} className="App-logo" alt="logo2" />
       <main className="App-main">
           <Switch>
             <Route path="/farmacias"  component={FarmaciasComponent} />

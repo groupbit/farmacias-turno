@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button } from 'reactstrap';
+
 
 const API_HOST = process.env.REACT_APP_API_HOST || 'localhost';
 const API_PORT = process.env.REACT_APP_API_PORT || 8888;
@@ -37,10 +39,11 @@ class CargarFarmacia extends React.Component {
     
       render() {
         return (
+            
           <form onSubmit={this.handleSubmit}>
             <label>Nombre:</label>
             <input type="text" name="nombre" value={this.state.nombre} onChange={this.handleChange}/>
-            <input type="submit" value="Submit" />
+            <Button type="submit" value="Submit" color="danger">Agregar</Button>
           </form>
         );
       }
