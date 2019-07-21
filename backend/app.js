@@ -5,8 +5,8 @@ Farmacia = require("./src/farmacia")
 
 mongoConnection.connect( (db) => {
     farmaciaHome = new Home("farmacias", db)    
-    folgera = new Farmacia("folgera")
-    ruiz = new Farmacia("ruiz")
+    folgera = new Farmacia("folgera",false,"España")
+    ruiz = new Farmacia("ruiz",true,"Peron")
     farmaciaHome.insert(folgera)
     farmaciaHome.insert(ruiz)
     server.register(ruiz)

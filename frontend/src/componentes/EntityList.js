@@ -13,7 +13,10 @@ class EntityList extends React.Component {
       super(props);
       this.state = { farmacias: [], selected:{}}
       this.select = this.select.bind(this);
-      this.farmciaChange = this.farmciaChange.bind(this);
+      this.farmaciaChange = this.farmaciaChange.bind(this);
+      this.actualizarList = this.actualizarList.bind(this);
+      this.listado = this.listado.bind(this);
+      
     }
 
     componentWillMount() {
@@ -27,18 +30,24 @@ class EntityList extends React.Component {
         return(
           <div className="productosCSS">
               <h2>{this.props.titulo}</h2>
-          
+          <Modificar 
+          farmacia={this.state.selected} 
+          farmaciaChange={this.farmaciaChange} 
+          listado = {this.listado}
+          />
           <table className="table">
             <thead>
               <tr>
-                 <th>nombre</th>
+                 <th>Nombre</th>
+                 <th>Estado</th>
+                 <th>Direccion</th>
               </tr>
             </thead>
             <tbody>
               {this.renderRows()}
             </tbody>
           </table>
-          <Modificar farmacia={this.state.selected} farmciaChange={this.farmaciaChange} />
+          
         </div>)
       }
       else {
@@ -59,17 +68,30 @@ class EntityList extends React.Component {
     select(unFarmacia) {
       this.setState({selected:unFarmacia})
     }
-    farmciaChange(unFarmacia) {
+    farmaciaChange(unFarmacia) {
       var newFarmacias = this.state.farmacias.map((item) => (unFarmacia._id !== item._id) ? item : unFarmacia )
       this.setState({farmacias: newFarmacias, selected:unFarmacia})
+    }
+    actualizarList(unFarmacia) {
+      var farmacia = this.state.farmacias.filter(
+        item => unFarmacia._id !== item._id
+      );
+      this.setState({ farmacias: farmacia });
     }
 
     renderRows() {
       return this.state.farmacias.map((unFarmacia, index) => {
         return (
-          <RowFarmacia farmacia={unFarmacia} selector={this.select} />
+          <RowFarmacia 
+          farmacia={unFarmacia} 
+          selector={this.select} 
+          actualizarList={this.actualizarList}
+          />
         );
       })
+    }
+    listado(){
+      this.componentWillMount();
     }
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Button, Form, Label, Input } from 'reactstrap';
 
 
 const API_HOST = process.env.REACT_APP_API_HOST || 'localhost';
@@ -11,7 +11,7 @@ class CargarFarmacia extends React.Component {
 
     constructor() {
         super();
-        this.state = { nombre: ""}
+        this.state = { nombre: "" ,DeTurno:"" ,direccion:""}
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
       }
@@ -40,11 +40,15 @@ class CargarFarmacia extends React.Component {
       render() {
         return (
             
-          <form onSubmit={this.handleSubmit}>
-            <label>Nombre:</label>
-            <input type="text" name="nombre" value={this.state.nombre} onChange={this.handleChange}/>
-            <Button type="submit" value="Submit" color="danger">Agregar</Button>
-          </form>
+          <Form onSubmit={this.handleSubmit}>
+            <Label>Nombre</Label>
+            <Input type="text" name="nombre" value={this.state.nombre} onChange={this.handleChange}/>
+            <Label>Estado</Label>
+            <Input type="text" name="DeTurno" value={this.state.DeTurno} onChange={this.handleChange}/>
+            <Label>Direccion</Label>
+            <Input type="text" name="direccion" value={this.state.direccion} onChange={this.handleChange}/>
+            <Button type="submit" value="Submit" outline color="success">Agregar</Button>
+          </Form>
         );
       }
 }

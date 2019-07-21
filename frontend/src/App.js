@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import logo2 from './logo2.jpg';
+import logo2 from './logo2.png';
 import {BrowserRouter as Router, Route, Switch, Redirect, NavLink as Link} from "react-router-dom"
 import EntityList from "./componentes/EntityList"
 import CargarFarmacia from "./componentes/CargarFarmacia"

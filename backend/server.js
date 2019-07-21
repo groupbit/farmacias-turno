@@ -32,6 +32,12 @@ function init() {
         res.json(allObjects) 
         res.end() })       
   })
+  sarver.get("/farmacia/DeTurno", (req,res)=>{
+    home = homes["farmacias"]
+    home.deTurno((myObject) => { 
+      res.json(myObject) 
+      res.end() }) 
+  })
 
   server.get("/:type/:id", (req, res) => {
     home = homes[req.params.type]
