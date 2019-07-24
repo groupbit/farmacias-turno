@@ -30,7 +30,7 @@ class MongoDBHome {
         })
     }
     deTurno(callback){
-        return this.persistentCollection.find({"DeTurno" : "true"}).toArray((error,result) =>{
+        return this.persistentCollection.find({"deTurno" : "true"}).toArray((error,result) =>{
             if(error) throw error
             callback(result)
         })

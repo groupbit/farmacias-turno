@@ -16,12 +16,13 @@ class Modificar extends React.Component {
       }
 
       handleChange(event) {
+        const target = event.target;
         var newFarmacia = Object.assign({}, this.state.farmacia);
-        newFarmacia[event.target.name] = event.target.value;
+        newFarmacia[event.target.name] = target.type === 'checkbox' ? target.checked : target.value;
         this.setState({farmacia: newFarmacia});
       }
       estadoInicial(){
-        this.setState({ farmacia: { nombre: "", DeTurno: "", direccion: "" } });
+        this.setState({ farmacia: { nombre: "", deTurno: true, direccion: "" } });
       }
       handleSubmit(event) {
         if (this.state.farmacia._id) {
@@ -66,10 +67,12 @@ class Modificar extends React.Component {
             <FormText></FormText>
           </FormGroup>
            <FormGroup >
-            <Label for="DeTurno">Estado</Label>
-            <Input type="boolean" name="DeTurno"size="10" placeholder="Estado" value={this.state.farmacia.DeTurno} onChange={this.handleChange}/>
-            <FormFeedback>You will not be able to see this</FormFeedback>
-            <FormText></FormText>
+            <Label for="deTurno">Estado</Label>
+            <input
+            name="deTurno"
+            type="checkbox"
+            checked={this.state.deTurno}
+            onChange={this.handleChange}></input>
           </FormGroup>
            <FormGroup >
             <Label for="direccion">Direccion</Label>

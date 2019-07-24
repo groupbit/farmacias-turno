@@ -1,4 +1,6 @@
 import React from 'react';
+import {Col, Button, Form, FormGroup, Label, Input, FormText ,FormFeedback} from 'reactstrap';
+
 
 
 
@@ -19,7 +21,7 @@ class RowFarmacia extends React.Component {
         this.props.actualizarList(this.props.farmacia)
     }
     handleSubmit(id) {
-        fetch(`"http://localhost:8888/farmacias/" ${id}`, {
+        fetch("http://localhost:8888/farmacias/" +id, {
             method: "DELETE",
             headers: {
               Accept: "application/json",
@@ -31,16 +33,17 @@ class RowFarmacia extends React.Component {
         return(
             <tr key={this.props.farmacia._id} onClick={this.selectFarmacia}>
               <td>{this.props.farmacia.nombre}</td>
-              <td>{this.props.farmacia.DeTurno}</td>
+              <td>{this.props.farmacia.deTurno ? "Si" : "No" }</td>
               <td>{this.props.farmacia.direccion}</td>
               <td>
-              <button
-                   onClick={() => {
+
+               <FormGroup check row>
+              <Col sm={{ size: 1, offset: 2 }}>
+              <Button  onClick={() => {
                       this.handleSubmit(this.props.farmacia._id);
-                    }}
-              >
-              <ion-icon name="trash"></ion-icon>
-              </button>
+                    }} outline color="info" >Eliminar</Button>
+              </Col>
+              </FormGroup>
               
              </td>
 

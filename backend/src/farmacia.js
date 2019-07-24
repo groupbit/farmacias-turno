@@ -2,7 +2,7 @@ class Farmacia {
 
     constructor(nombre,estado,direccion) {
         this.nombre = nombre;
-        this.DeTurno = estado;
+        this.deTurno = estado;
         this.direccion= direccion;
     }
 }
