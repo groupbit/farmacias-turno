@@ -71,7 +71,7 @@ class Modificar extends React.Component {
             <input
             name="deTurno"
             type="checkbox"
-            checked={this.state.deTurno}
+            checked={this.state.farmacia.deTurno}
             onChange={this.handleChange}></input>
           </FormGroup>
            <FormGroup >
