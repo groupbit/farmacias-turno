@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import logo2 from './logo2.jpg';
+import logo2 from './logo2.png';
 import {BrowserRouter as Router, Route, Switch, Redirect, NavLink as Link} from "react-router-dom"
 import EntityList from "./componentes/EntityList"
-import CargarFarmacia from "./componentes/CargarFarmacia"
+import FarmaciaDeTurno from "./componentes/FarmaciaDeTurno"
 import { Nav, NavItem, NavLink } from 'reactstrap';
 
 function FarmaciasComponent(){
@@ -22,14 +22,14 @@ function App() {
             <NavLink tag={Link} to="/farmacias" activeClassName="active">Farmacias</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/Cargar" activeClassName="active">Agregar</NavLink>
+            <NavLink tag={Link} to="/farmaciaDeTurno" activeClassName="active">Farmacia De Turno</NavLink>
           </NavItem>
         </Nav> 
        <img src={logo2} className="App-logo" alt="logo2" />
       <main className="App-main">
           <Switch>
             <Route path="/farmacias"  component={FarmaciasComponent} />
-            <Route path="/Cargar"  component={CargarFarmacia} />
+            <Route path="/farmaciaDeTurno"  component={FarmaciaDeTurno} />
             <Redirect to="/" />
           </Switch>
       </main>

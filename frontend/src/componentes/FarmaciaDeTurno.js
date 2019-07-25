@@ -1,26 +1,20 @@
 import React from 'react';
-import RowFarmacia from './RowFarmacia';
-import Modificar from './Modificar';
+import RowFarmaciaDeTurno from './RowFarmaciaDeTurno';
 
 const API_HOST = process.env.REACT_APP_API_HOST || 'localhost';
 const API_PORT = process.env.REACT_APP_API_PORT || 8888;
 
 const API_URL = `//${API_HOST}:${API_PORT}`;
 
-class EntityList extends React.Component {
+class FarmaciaDeTurno extends React.Component {
 
     constructor(props) {
       super(props);
       this.state = { farmacias: [], selected:{}}
-      this.select = this.select.bind(this);
-      this.farmaciaChange = this.farmaciaChange.bind(this);
-      this.actualizarList = this.actualizarList.bind(this);
-      this.listado = this.listado.bind(this);
-      
     }
 
     componentWillMount() {
-      fetch(`http://localhost:8888/farmacias`)
+      fetch(`http://localhost:8888/farmacias/deturno`)
         .then( res => res.json())
         .then( prds => this.setState({farmacias: prds}));
     }
@@ -30,16 +24,10 @@ class EntityList extends React.Component {
         return(
           <div className="productosCSS">
               <h2>{this.props.titulo}</h2>
-          <Modificar 
-          farmacia={this.state.selected} 
-          farmaciaChange={this.farmaciaChange} 
-          listado = {this.listado}
-          />
           <table className="table">
             <thead>
               <tr>
                  <th>Nombre</th>
-                 <th>De Turno</th>
                  <th>Direccion</th>
               </tr>
             </thead>
@@ -65,36 +53,18 @@ class EntityList extends React.Component {
         );
       })
     }
-    select(unFarmacia) {
-      this.setState({selected:unFarmacia})
-    }
-    farmaciaChange(unFarmacia) {
-      var newFarmacias = this.state.farmacias.map((item) => (unFarmacia._id !== item._id) ? item : unFarmacia )
-      this.setState({farmacias: newFarmacias, selected:unFarmacia})
-    }
-    actualizarList(unFarmacia) {
-      var farmacia = this.state.farmacias.filter(
-        item => unFarmacia._id !== item._id
-      );
-      this.setState({ farmacias: farmacia });
-    }
 
     renderRows() {
       return this.state.farmacias.map((unFarmacia, index) => {
         return (
-          <RowFarmacia 
+          <RowFarmaciaDeTurno 
           farmacia={unFarmacia} 
-          selector={this.select} 
-          actualizarList={this.actualizarList}
           />
         );
       })
-    }
-    listado(){
-      this.componentWillMount();
     }
   }
 
 
 
-  export default EntityList
+  export default FarmaciaDeTurno

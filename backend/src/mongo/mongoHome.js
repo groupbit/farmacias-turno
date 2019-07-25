@@ -29,7 +29,12 @@ class MongoDBHome {
             callback(result)
         })
     }
-
+    deTurno(callback){
+        return this.persistentCollection.find({"deTurno" : true }).toArray((error,result) =>{
+            if(error) throw error
+            callback(result)
+        })
+    }
     update(element) {
         var objectId = mongoDriver.ObjectID(element._id);
         element._id = objectId;
