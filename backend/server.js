@@ -32,7 +32,7 @@ function init() {
         res.json(allObjects) 
         res.end() })       
   })
-  server.get("/farmacia/deturno", (req,res)=>{
+  server.get("/farmacias/deturno", (req,res)=>{
     home = homes["farmacias"]
     home.deTurno((myObject) => { 
       res.json(myObject) 

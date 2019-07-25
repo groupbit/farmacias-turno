@@ -67,8 +67,8 @@ class Modificar extends React.Component {
             <FormText></FormText>
           </FormGroup>
            <FormGroup >
-            <Label for="deTurno">Estado</Label>
-            <input
+            <label for="deTurno">De Turno</label>
+            <input 
             name="deTurno"
             type="checkbox"
             checked={this.state.farmacia.deTurno}

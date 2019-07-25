@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Button, Form, FormGroup, Label, Input, FormText ,FormFeedback} from 'reactstrap';
+import {Col, Button,FormGroup} from 'reactstrap';
 
 
 
