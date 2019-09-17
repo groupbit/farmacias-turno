@@ -9,8 +9,8 @@ class RowFarmacia extends React.Component {
     constructor(props) {
         super(props);
         this.selectFarmacia = this.selectFarmacia.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.actualizar = this.actualizar.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.actualizar = this.actualizar.bind(this);
     }
     
     selectFarmacia() {
@@ -33,8 +33,9 @@ class RowFarmacia extends React.Component {
         return(
             <tr key={this.props.farmacia._id} onClick={this.selectFarmacia}>
               <td>{this.props.farmacia.nombre}</td>
-              <td>{this.props.farmacia.deTurno ? "Si" : "No" }</td>
+              <td>{this.props.farmacia.deTurno ? "De Turno" : "No" }</td>
               <td>{this.props.farmacia.direccion}</td>
+              <td>{this.props.farmacia.fecha}</td>
               <td>
 
                <FormGroup check row>
