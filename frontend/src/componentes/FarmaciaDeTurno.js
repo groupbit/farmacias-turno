@@ -14,7 +14,7 @@ class FarmaciaDeTurno extends React.Component {
     }
 
     componentWillMount() {
-      fetch(`http://localhost:8888/farmacias/deturno`)
+      fetch(`http://localhost:8888/farmacias?turno=true`)
         .then( res => res.json())
         .then( prds => this.setState({farmacias: prds}));
     }

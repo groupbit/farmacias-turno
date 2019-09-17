@@ -27,11 +27,20 @@ function init() {
   })
 
   server.get("/:type", (req, res) => {
-    home = homes[req.params.type]
-    home.all((allObjects) => {
+    var query = {}
+    if (req.query.turno) {
+      console.log(`Query farmacias: ${req.query.turno}`)
+      var deTurno = (req.query.turno == "true")
+      query = {"deTurno" : deTurno }
+    }
+    home = homes["farmacias"]
+    home.find(query,
+      (allObjects) => {
         res.json(allObjects) 
-        res.end() })       
+        res.end()
+      })         
   })
+
   server.get("/farmacias/deturno", (req,res)=>{
     home = homes["farmacias"]
     home.deTurno((myObject) => { 

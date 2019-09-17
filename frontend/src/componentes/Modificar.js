@@ -77,7 +77,6 @@ class Modificar extends React.Component {
            <FormGroup >
             <Label for="direccion">Direccion</Label>
             <Input type="text" name="direccion" size="10" placeholder="Direccion" value={this.state.farmacia.direccion} onChange={this.handleChange}/>
-            <FormFeedback>You will not be able to see this</FormFeedback>
             <FormText></FormText>
            </FormGroup>
             <FormGroup check row>
