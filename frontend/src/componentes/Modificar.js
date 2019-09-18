@@ -7,7 +7,9 @@ class Modificar extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {farmacia:props.farmacia}
+        this.state = {
+          farmacia: props.farmacia
+        }
         this.estadoInicial = this.estadoInicial.bind(this);
       }
 
@@ -23,6 +25,10 @@ class Modificar extends React.Component {
       }
       estadoInicial(){
         this.setState({ farmacia: { nombre: "", deTurno: true, direccion: "" } });
+      }
+      agregarFechas(event){
+        console.log(this.state.fecha)
+        //this.setState(this.state.farmacia.fechas.add(this.state.fecha));
       }
       handleSubmit(event) {
         if (this.state.farmacia._id) {
@@ -74,6 +80,22 @@ class Modificar extends React.Component {
             checked={this.state.farmacia.deTurno}
             onChange={this.handleChange}></input>
           </FormGroup>
+         { /* <FormGroup> 
+         <div className="input-field s12">
+                    <input
+                      className="#fce4ec pink lighten-5"
+                      type="date"
+                      name="fecha"
+                      placeholder="2019-12-28"
+                      value={this.state.fecha}
+                      onChange={this.handleChange}
+                    />
+          </div>
+          <button onClick={this.agregarFechas}>
+            Agregar Fecha
+          </button>
+          </FormGroup>
+          */}
            <FormGroup >
             <Label for="direccion">Direccion</Label>
             <Input type="text" name="direccion" size="10" placeholder="Direccion" value={this.state.farmacia.direccion} onChange={this.handleChange}/>
