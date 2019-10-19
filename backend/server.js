@@ -41,12 +41,6 @@ function init() {
       })         
   })
 
-  server.get("/farmacias/deturno", (req,res)=>{
-    home = homes["farmacias"]
-    home.deTurno((myObject) => { 
-      res.json(myObject) 
-      res.end() }) 
-  })
 
   server.get("/:type/:id", (req, res) => {
     home = homes[req.params.type]

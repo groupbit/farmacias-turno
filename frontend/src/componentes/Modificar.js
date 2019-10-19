@@ -1,5 +1,7 @@
 import React from 'react';
 import {Col, Button, Form, FormGroup, Label, Input, FormText ,FormFeedback} from 'reactstrap';
+import MultipleDatePicker from 'react-multiple-datepicker'
+
 
 class Modificar extends React.Component {
 
@@ -7,10 +9,9 @@ class Modificar extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {
-          farmacia: props.farmacia
-        }
+        this.state = {farmacia:props.farmacia}
         this.estadoInicial = this.estadoInicial.bind(this);
+        this.setFechas = this.setFechas.bind(this);
       }
 
       componentWillReceiveProps(props) {
@@ -23,13 +24,13 @@ class Modificar extends React.Component {
         newFarmacia[event.target.name] = target.type === 'checkbox' ? target.checked : target.value;
         this.setState({farmacia: newFarmacia});
       }
+      setFechas(dates) { 
+        this.setState({fechas: dates});
+       } 
       estadoInicial(){
-        this.setState({ farmacia: { nombre: "", deTurno: true, direccion: "" } });
+        this.setState({ farmacia: { nombre: "", deTurno: true, direccion: "" ,fechas:[]} });
       }
-      agregarFechas(event){
-        console.log(this.state.fecha)
-        //this.setState(this.state.farmacia.fechas.add(this.state.fecha));
-      }
+
       handleSubmit(event) {
         if (this.state.farmacia._id) {
           this.editarFarmacia();
@@ -65,7 +66,7 @@ class Modificar extends React.Component {
     
       render() {
         return (
-          <Form class="margen-superior" onSubmit={this.handleSubmit}>
+          <Form class="margen-superior" onSubmit={this.handleSubmit} >
            <FormGroup >
             <Label for="nombre">Nombre</Label>
             <Input type="text" name="nombre" size="10" placeholder="Nombre" value={this.state.farmacia.nombre} onChange={this.handleChange}/>
@@ -80,22 +81,13 @@ class Modificar extends React.Component {
             checked={this.state.farmacia.deTurno}
             onChange={this.handleChange}></input>
           </FormGroup>
-         { /* <FormGroup> 
-         <div className="input-field s12">
-                    <input
-                      className="#fce4ec pink lighten-5"
-                      type="date"
-                      name="fecha"
-                      placeholder="2019-12-28"
-                      value={this.state.fecha}
-                      onChange={this.handleChange}
-                    />
-          </div>
-          <button onClick={this.agregarFechas}>
-            Agregar Fecha
-          </button>
+          <FormGroup>
+          <Label for="fechas">Fechas</Label>
+            <MultipleDatePicker onSubmit={dates => this.setFechas(dates)}     
+               />
+            <FormText></FormText>
+              
           </FormGroup>
-          */}
            <FormGroup >
             <Label for="direccion">Direccion</Label>
             <Input type="text" name="direccion" size="10" placeholder="Direccion" value={this.state.farmacia.direccion} onChange={this.handleChange}/>
@@ -109,6 +101,8 @@ class Modificar extends React.Component {
           </Form>
         );
       }
+     
+    
 }
 
   export default Modificar
