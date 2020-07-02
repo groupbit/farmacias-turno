@@ -1,6 +1,7 @@
 import React from 'react';
-import {Col, Button, Form, FormGroup, Label, Input, FormText ,FormFeedback} from 'reactstrap';
-import MultipleDatePicker from 'react-multiple-datepicker'
+import Select from 'react-select'
+import {Col, FormGroup,FormText} from 'reactstrap';
+var moment = require('moment');
 
 
 class Modificar extends React.Component {
@@ -9,37 +10,69 @@ class Modificar extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {farmacia:props.farmacia}
+        this.handleChange2 = this.handleChange2.bind(this);
+        this.listaDeFechaNueva = this.listaDeFechaNueva.bind(this);
+        
+        this.state = {
+          selectedOption: "",
+          options:null,
+          fecha:"",
+          listaFecha:[],
+          farmacia:props.farmacia};
         this.estadoInicial = this.estadoInicial.bind(this);
         this.setFechas = this.setFechas.bind(this);
       }
+      
 
       componentWillReceiveProps(props) {
-          this.setState({farmacia: props.farmacia})
+          this.setState({options:props.farmacia.fechas.map(function(f){
+            const data =moment(f).format('DD-MM-YYYY')
+            const data2 = {label:data};
+            return data2;
+            })
+          })
+          this.setState({farmacia: props.farmacia},console.log("state",this.state))
       }
 
       handleChange(event) {
         const target = event.target;
         var newFarmacia = Object.assign({}, this.state.farmacia);
-        newFarmacia[event.target.name] = target.type === 'checkbox' ? target.checked : target.value;
+        newFarmacia[event.target.name] = target.value;
         this.setState({farmacia: newFarmacia});
       }
       setFechas(dates) { 
-        this.setState({fechas: dates});
-       } 
-      estadoInicial(){
-        this.setState({ farmacia: { nombre: "", deTurno: true, direccion: "" ,fechas:[]} });
-      }
+        console.log(dates);
+        var newFarmacia = Object.assign({}, this.state.farmacia);
+        newFarmacia["fechas"] = dates
+        this.setState({farmacia:newFarmacia},this.editarFarmacia);
 
+      } 
+      estadoInicial(){
+        this.setState({ farmacia: { nombre: "", direccion: "", fechas:[]} });
+      }
+      listaDeFechaNueva(){
+        let nuevaFecha = this.state.fecha;
+        console.log("nuevaFecha",nuevaFecha)
+        console.log("listaNuevaState",this.state)
+        
+        let fechasFarmaci = this.state.options.map(function(f){
+                                return f.label
+                            })
+        fechasFarmaci.push(nuevaFecha)
+        console.log("lista",fechasFarmaci)
+        this.setFechas(fechasFarmaci);
+
+      }
       handleSubmit(event) {
         if (this.state.farmacia._id) {
-          this.editarFarmacia();
+          this.listaDeFechaNueva();
         } else {
           this.agregarFarmacia();
         }
         event.preventDefault();
       }
       editarFarmacia() {
+        
 
         fetch('http://localhost:8888/farmacias', {
             method: 'PUT',
@@ -63,42 +96,62 @@ class Modificar extends React.Component {
         }).then(res => this.props.listado())
           .then(this.estadoInicial);
       }
-    
+      removeItemFromArr ( arr, item ) {
+        var i = arr.indexOf( item );
+        arr.splice( i, 1 );
+      }
+      handleChange2 = selectedOption => {
+        this.setState({selectedOption},this.removeItemFromArr(this.state.options,this.state.selectedOption));
+        console.log("state",this.state);
+      };
+      nuevaFecha= event =>{
+        let value = event.target.value
+        console.log("event",value)
+        this.setState({fecha:value},console.log("nuevaFecha",this.state.fecha))
+      }
       render() {
+        const { selectedOption } = this.state;
         return (
-          <Form class="margen-superior" onSubmit={this.handleSubmit} >
-           <FormGroup >
-            <Label for="nombre">Nombre</Label>
-            <Input type="text" name="nombre" size="10" placeholder="Nombre" value={this.state.farmacia.nombre} onChange={this.handleChange}/>
-            <FormFeedback>You will not be able to see this</FormFeedback>
-            <FormText></FormText>
-          </FormGroup>
-           <FormGroup >
-            <label for="deTurno">De Turno</label>
-            <input 
-            name="deTurno"
-            type="checkbox"
-            checked={this.state.farmacia.deTurno}
-            onChange={this.handleChange}></input>
-          </FormGroup>
-          <FormGroup>
-          <Label for="fechas">Fechas</Label>
-            <MultipleDatePicker onSubmit={dates => this.setFechas(dates)}     
-               />
-            <FormText></FormText>
-              
-          </FormGroup>
-           <FormGroup >
-            <Label for="direccion">Direccion</Label>
-            <Input type="text" name="direccion" size="10" placeholder="Direccion" value={this.state.farmacia.direccion} onChange={this.handleChange}/>
-            <FormText></FormText>
+          <form class="margen-superior" onSubmit={this.handleSubmit} >
+           <FormGroup>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" size="10" placeholder="Nombre" value={this.state.farmacia.nombre} onChange={this.handleChange}/>
            </FormGroup>
-            <FormGroup check row>
+           <FormGroup >
+            <label for="direccion">Direccion</label>
+            <input type="text" name="direccion" size="10" placeholder="Direccion" value={this.state.farmacia.direccion} onChange={this.handleChange}/>
+            <FormText></FormText>
+           </FormGroup> 
+          <div> 
+           <div>
+            <div class="col-4">
+             <Select
+              type="date"
+              placeholder = {"SelectFecha"}
+              value={selectedOption}
+              onChange={this.handleChange2}
+              options={
+                this.state.options
+              }
+             />
+
+           <input type="text" value={this.state.selectedOption.label}/>
+           <input type="date" 
+                    placeholder="Fecha"
+                    name="fecha"
+                    value={this.state.fecha} 
+                    onChange={this.nuevaFecha}
+                    />
+            </div>
+          </div>
+          </div>
+
+          <FormGroup check row>
               <Col sm={{ size: 1, offset: 2 }}>
-             <Button type="submit" value="Submit" outline color="info" >Ok</Button>
+             <button type="submit" value="Submit" outline color="info" >Ok</button>
               </Col>
-        </FormGroup>
-          </Form>
+            </FormGroup>
+          </form>
         );
       }
      

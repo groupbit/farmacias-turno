@@ -1,10 +1,7 @@
 import React from 'react';
 import RowFarmaciaDeTurno from './RowFarmaciaDeTurno';
 
-const API_HOST = process.env.REACT_APP_API_HOST || 'localhost';
-const API_PORT = process.env.REACT_APP_API_PORT || 8888;
 
-const API_URL = `//${API_HOST}:${API_PORT}`;
 
 class FarmaciaDeTurno extends React.Component {
 
@@ -47,7 +44,7 @@ class FarmaciaDeTurno extends React.Component {
       }
     }
     renderHeaders(columns) {
-      return columns.map((col, index) => {
+      return columns.map((col) => {
         return (
             <th>{col}</th>
         );
@@ -55,7 +52,7 @@ class FarmaciaDeTurno extends React.Component {
     }
 
     renderRows() {
-      return this.state.farmacias.map((unFarmacia, index) => {
+      return this.state.farmacias.map((unFarmacia) => {
         return (
           <RowFarmaciaDeTurno 
           farmacia={unFarmacia} 

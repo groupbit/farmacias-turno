@@ -2,10 +2,6 @@ import React from 'react';
 import RowFarmacia from './RowFarmacia';
 import Modificar from './Modificar';
 
-const API_HOST = process.env.REACT_APP_API_HOST || 'localhost';
-const API_PORT = process.env.REACT_APP_API_PORT || 8888;
-
-const API_URL = `//${API_HOST}:${API_PORT}`;
 
 class EntityList extends React.Component {
 
