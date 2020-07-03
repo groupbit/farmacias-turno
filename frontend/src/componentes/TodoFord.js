@@ -27,7 +27,7 @@ render(){
       <form onSubmit = {this.handleSumit} class="form-inline">
       <input class="form-control"
             name="text"
-            type="datetime-local"
+            type="date"
             value={this.state.text}
             onChange={this.handleChange}
             placeholder = "todos..."
