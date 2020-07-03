@@ -1,10 +1,7 @@
 import React from 'react';
 import RowFarmaciaDeTurno from './RowFarmaciaDeTurno';
+var addZero = require('add-zero');
 
-const API_HOST = process.env.REACT_APP_API_HOST || 'localhost';
-const API_PORT = process.env.REACT_APP_API_PORT || 8888;
-
-const API_URL = `//${API_HOST}:${API_PORT}`;
 
 class FarmaciaDeTurno extends React.Component {
 
@@ -12,9 +9,22 @@ class FarmaciaDeTurno extends React.Component {
       super(props);
       this.state = { farmacias: [], selected:{}}
     }
+    hoyFecha(){
+      var hoy = new Date();
+          var dd = hoy.getDate();
+          var mm = hoy.getMonth()+1;
+          var yyyy = hoy.getFullYear();
+          
+          dd = addZero(dd);
+          mm = addZero(mm);
+   
+          console.log("fecha",yyyy+'-'+mm+'-'+dd)
+          return yyyy+'-'+mm+'-'+dd;
 
+  }
     componentWillMount() {
-      fetch(`http://localhost:8888/farmacias?turno=true`)
+      let fecha = ''+this.hoyFecha()+'';
+      fetch(`http://localhost:8888/farmacias?turno=`+fecha)
         .then( res => res.json())
         .then( prds => this.setState({farmacias: prds}));
     }
@@ -24,6 +34,9 @@ class FarmaciaDeTurno extends React.Component {
         return(
           <div className="productosCSS">
               <h2>{this.props.titulo}</h2>
+          <div>
+            <input type="date" ></input>
+          </div>
           <table className="table">
             <thead>
               <tr>
@@ -35,7 +48,7 @@ class FarmaciaDeTurno extends React.Component {
               {this.renderRows()}
             </tbody>
           </table>
-          
+          <button onClick={this.hoyFecha}>fecha</button>
         </div>)
       }
       else {
@@ -47,7 +60,7 @@ class FarmaciaDeTurno extends React.Component {
       }
     }
     renderHeaders(columns) {
-      return columns.map((col, index) => {
+      return columns.map((col) => {
         return (
             <th>{col}</th>
         );
@@ -55,7 +68,7 @@ class FarmaciaDeTurno extends React.Component {
     }
 
     renderRows() {
-      return this.state.farmacias.map((unFarmacia, index) => {
+      return this.state.farmacias.map((unFarmacia) => {
         return (
           <RowFarmaciaDeTurno 
           farmacia={unFarmacia} 

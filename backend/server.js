@@ -30,8 +30,8 @@ function init() {
     var query = {}
     if (req.query.turno) {
       console.log(`Query farmacias: ${req.query.turno}`)
-      var deTurno = (req.query.turno == "true")
-      query = {"deTurno" : deTurno }
+      var fecha = (req.query.turno)
+      query = {"fechas" : fecha }
     }
     home = homes["farmacias"]
     home.find(query,
