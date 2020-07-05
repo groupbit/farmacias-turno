@@ -7,7 +7,14 @@ class FarmaciaDeTurno extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = { farmacias: [], selected:{}}
+      this.state = { 
+        farmacias: [],
+         selected:{},
+         fecha:""
+        }
+      this.fetchData = this.fetchData.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleChange = this.handleChange.bind(this);
     }
     hoyFecha(){
       var hoy = new Date();
@@ -23,11 +30,47 @@ class FarmaciaDeTurno extends React.Component {
 
   }
     componentWillMount() {
-      let fecha = ''+this.hoyFecha()+'';
-      fetch(`http://localhost:8888/farmacias?turno=`+fecha)
-        .then( res => res.json())
-        .then( prds => this.setState({farmacias: prds}));
+      this.fetchData()
     }
+    handleChange(e) {
+      const target = e.target;
+      const value = target.value;
+      const name = target.name;
+      this.setState({[name]:value});
+    }
+  
+    fetchData(consulta) {
+      console.log("2.consulta: ",consulta);
+      console.log("fecha: ", this.state.fecha);
+
+      if(consulta != null){
+        fetch(`http://localhost:8888/farmacias?turno=`+consulta)
+          .then( res => res.json())
+          .then( prds => this.setState({farmacias: prds}));
+      }
+      if(consulta == null){
+        let fecha = ''+this.hoyFecha()+'';
+        fetch(`http://localhost:8888/farmacias?turno=`+fecha)
+          .then( res => res.json())
+          .then( prds => this.setState({farmacias: prds}));
+      }
+    }
+    handleSubmit(event) {
+      var consulta
+      if(this.state.nombre === ""){
+        this.fetchData(consulta);
+      }
+      if(this.state.fecha !== "" ){ 
+        
+        consulta = this.state.fecha;
+        console.log("consulta",consulta)
+        this.fetchData(consulta);
+      }
+      event.preventDefault();
+    }
+  
+  
+  
 
     render() {
       if( this.state.farmacias.length > 0 ) {
@@ -35,7 +78,12 @@ class FarmaciaDeTurno extends React.Component {
           <div className="productosCSS">
               <h2>{this.props.titulo}</h2>
           <div>
-            <input type="date" ></input>
+          <form>
+            <label>Fecha</label>
+            <input  type= "date" name="fecha" value={this.state.fecha}  onChange={this.handleChange} />
+            <button type="button" onClick={this.handleSubmit}>Consultar</button>
+          </form>
+
           </div>
           <table className="table">
             <thead>
@@ -48,7 +96,6 @@ class FarmaciaDeTurno extends React.Component {
               {this.renderRows()}
             </tbody>
           </table>
-          <button onClick={this.hoyFecha}>fecha</button>
         </div>)
       }
       else {

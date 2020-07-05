@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select'
-import {Col, FormGroup,FormText} from 'reactstrap';
+import {FormGroup,FormText} from 'reactstrap';
 import TodoForm from "./TodoFord";
 import Todo from './Todo';
 var moment = require('moment');
@@ -192,12 +192,6 @@ class Modificar extends React.Component {
             </div>
           </div>
           </div>
-
-          <FormGroup check row>
-              <Col sm={{ size: 1, offset: 2 }}>
-             <button type="submit" value="Submit" outline color="info" >Ok</button>
-              </Col>
-            </FormGroup>
             <button onClick={this.handleSubmit}>listo</button>
           </form>
         );
