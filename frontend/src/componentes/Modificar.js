@@ -204,7 +204,6 @@ class Modificar extends React.Component {
                 this.state.options
               }
              />
-
            <input type="text" value={this.state.selectedOption.label}/>
            <input type="date" 
                     placeholder="Fecha"
