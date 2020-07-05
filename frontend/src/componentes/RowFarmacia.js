@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col, Button,FormGroup} from 'reactstrap';
-// import Turno from './Turno';
+var moment = require('moment');
 
 
 

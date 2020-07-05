@@ -17,6 +17,7 @@ class Modificar extends React.Component {
         this.addTodo=this.addTodo.bind(this);
         
         this.state = {
+          ver:true,
           selectedOption: "",
           options:null,
           todos:[],
@@ -29,14 +30,32 @@ class Modificar extends React.Component {
       
 
       componentWillReceiveProps(props) {
-          this.setState({options:props.farmacia.fechas.map(function(f){
+        // console.log("props",props)
+        // if(props.farmacia.fechas !== []){
+        //   console.log("famacia111",props.farmacia.fechas)
+        //   console.log("famacia222",props.farmacia)
+        //   this.setState({options:props.farmacia.fechas.map(function(f){
+        //     const data =moment(f).format('DD-MM-YYYY')
+        //     const data2 = {label:data};
+        //     return data2;
+        //     })
+        //   })
+        //   this.setState({farmacia: props.farmacia},console.log("state",this.state))
+        // }else{
+          this.setState({farmacia: props.farmacia},console.log("state",this.state))
+      }
+      
+      modificarTurno=(event)=>{
+          this.setState({options:this.state.farmacia.fechas.map(function(f){
             const data =moment(f).format('DD-MM-YYYY')
             const data2 = {label:data};
             return data2;
             })
           })
-          this.setState({farmacia: props.farmacia},console.log("state",this.state))
-      }
+          this.setState({ver:false})
+          event.preventDefault();
+        }
+      
 
       handleChange(event) {
         const target = event.target;
@@ -63,7 +82,7 @@ class Modificar extends React.Component {
           })
 
       }
-      listaDeFechaNueva(){
+      listaDeFechaNueva=()=>{
         let nuevaFecha = this.state.fecha;
         console.log("nuevaFecha",nuevaFecha)
         console.log("listaNuevaState",this.state)
@@ -88,7 +107,7 @@ class Modificar extends React.Component {
           );
         
       }
-      handleSubmit(event) {
+      handleSubmit =(event)=> {
         if (this.state.farmacia._id) {
           this.listaDeFechaNueva();
         } else {
@@ -97,7 +116,7 @@ class Modificar extends React.Component {
         }
         event.preventDefault();
       }
-      editarFarmacia() {
+      editarFarmacia=()=> {
         
 
         fetch('http://localhost:8888/farmacias', {
@@ -145,7 +164,7 @@ class Modificar extends React.Component {
         const { selectedOption } = this.state;
         let todos = [];
         return (
-          <form class="margen-superior" >
+          <form class="margen-superior">
            <FormGroup>
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" size="10" placeholder="Nombre" value={this.state.farmacia.nombre} onChange={this.handleChange}/>
@@ -155,22 +174,26 @@ class Modificar extends React.Component {
             <input type="text" name="direccion" size="10" placeholder="Direccion" value={this.state.farmacia.direccion} onChange={this.handleChange}/>
             <FormText></FormText>
            </FormGroup> 
-           <div >
-          <TodoForm onSubmit={this.addTodo}/>
-            {todos.map(todo => (
-              <Todo 
-                key={todo.id}
-                toggleComplete={() => this.toggleComplete(todo.id)} 
-                onDelete = {() => this.handleDeleteTodo(todo.id)}
-                todo={todo}
-              />
-            ))}
+          <div >
+          {this.state.ver === true ? (
             <div>
-            Total:{this.state.todos.filter(todo => !todo.complete).length}
+            <TodoForm onSubmit={this.addTodo}/>
+              {todos.map(todo => (
+                <Todo 
+                  key={todo.id}
+                  toggleComplete={() => this.toggleComplete(todo.id)} 
+                  onDelete = {() => this.handleDeleteTodo(todo.id)}
+                  todo={todo}
+                />
+              ))}
+            <div>
+              Total:{this.state.todos.filter(todo => !todo.complete).length}
+            </div>
           </div>
+          ): false}    
           </div>    
           <div> 
-           <div>
+           <div> {this.state.ver === false ? (
             <div class="col-4">
              <Select
               type="date"
@@ -190,9 +213,11 @@ class Modificar extends React.Component {
                     onChange={this.nuevaFecha}
                     />
             </div>
+          ): true}
           </div>
           </div>
-            <button onClick={this.handleSubmit}>listo</button>
+            <button style={ {margin :"5px"}} onClick={this.modificarTurno}>Modificar</button>
+            <button style={ {margin :"5px"}} onClick={this.handleSubmit}>Listo</button>
           </form>
         );
       }

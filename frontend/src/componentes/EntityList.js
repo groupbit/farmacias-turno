@@ -35,7 +35,6 @@ class EntityList extends React.Component {
             <thead>
               <tr>
                  <th>Nombre</th>
-                 <th>De Turno</th>
                  <th>Direccion</th>
                  <th>Fecha</th>
               </tr>

@@ -1,9 +1,8 @@
 class Farmacia{
-    constructor(nombre,estado,direccion,fechas) {
+    constructor(nombre,direccion,fechas) {
         this.nombre = nombre;
-        this.deTurno = estado;
         this.direccion= direccion;
-        this.fechas = [];
+        this.fechas = [fechas];
     }
 }
 
