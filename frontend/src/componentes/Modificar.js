@@ -116,7 +116,7 @@ class Modificar extends React.Component {
         }
         event.preventDefault();
       }
-      editarFarmacia=()=> {
+      editarFarmacia =()=> {
         
 
         fetch('http://localhost:8888/farmacias', {
@@ -193,7 +193,7 @@ class Modificar extends React.Component {
           ): false}    
           </div>    
           <div> 
-           <div> {this.state.ver === false ? (
+           <div class="row align-items-start" > {this.state.ver === false ? (
             <div class="col-4">
              <Select
               type="date"
